@@ -15,7 +15,10 @@ export default class PlayScene extends Scene {
   public create() {
     this.cursors = this.input.keyboard.createCursorKeys();
     this.add.image(0, 0, 'sky').setOrigin(0, 0);
-    this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+    this.scoreText = this.add.text(16, 16, 'score: 0', {
+      fontSize: '32px',
+      fill: '#000',
+    });
 
     this.platforms = this.physics.add.staticGroup();
     this.platforms
@@ -54,9 +57,9 @@ export default class PlayScene extends Scene {
       setXY: { x: 12, y: 0, stepX: 70 },
     });
 
-    this.stars.children.iterate((child) => {
-        // @ts-ignore
-        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+    this.stars.children.iterate(child => {
+      // @ts-ignore
+      child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
     });
 
     this.physics.add.collider(this.player, this.platforms);
@@ -87,6 +90,19 @@ export default class PlayScene extends Scene {
 
     if (this.cursors.up.isDown && this.player.body.touching.down) {
       this.player.setVelocityY(-330);
+    }
+
+    if (
+      this.player.body.position.x ===
+        this.sys.game.canvas.width - this.player.body.width &&
+      this.player.body.velocity.x > 0
+    ) {
+      this.player.body.position.x = 0;
+    }
+
+    if (this.player.body.position.x === 0 && this.player.body.velocity.x < 0) {
+      this.player.body.position.x =
+        this.sys.game.canvas.width - this.player.body.width;
     }
   }
 
