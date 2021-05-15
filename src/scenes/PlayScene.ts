@@ -22,14 +22,22 @@ export default class PlayScene extends Scene {
 
     this.platforms = this.physics.add.staticGroup();
     this.platforms
-      .create(400, 568, 'ground')
+      .create(400, 450, 'ground')
       .setScale(2)
       .refreshBody();
-    this.platforms.create(600, 400, 'ground');
-    this.platforms.create(50, 250, 'ground');
-    this.platforms.create(750, 220, 'ground');
+    this.platforms.create(-50, 280, 'ground');
+    this.platforms.create(-50, 140, 'ground');
+    this.platforms.create(this.sys.game.canvas.width + 40, 280, 'ground');
+    this.platforms.create(this.sys.game.canvas.width + 40, 140, 'ground');
+    this.platforms.create(400, 220, 'sground');
+    this.platforms.create(500, 350, 'sground');
 
-    this.player = this.physics.add.sprite(100, 450, 'dude');
+    this.platforms.create(10, 480, 'wall');
+    this.platforms.create(10, -50, 'wall');
+    this.platforms.create(this.sys.game.canvas.width - 10, 480, 'wall');
+    this.platforms.create(this.sys.game.canvas.width - 10, -50, 'wall');
+
+    this.player = this.physics.add.sprite(20, 200, 'dude');
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
 
@@ -53,8 +61,8 @@ export default class PlayScene extends Scene {
 
     this.stars = this.physics.add.group({
       key: 'star',
-      repeat: 11,
-      setXY: { x: 12, y: 0, stepX: 70 },
+      repeat: 10,
+      setXY: { x: 50, y: 0, stepX: 70 },
     });
 
     this.stars.children.iterate(child => {
@@ -98,12 +106,12 @@ export default class PlayScene extends Scene {
       this.player.body.velocity.x > 0
     ) {
       this.player.body.position.x = 0;
+      this.nexLevel();
     }
+  }
 
-    if (this.player.body.position.x === 0 && this.player.body.velocity.x < 0) {
-      this.player.body.position.x =
-        this.sys.game.canvas.width - this.player.body.width;
-    }
+  private nexLevel() {
+    // some condition
   }
 
   private collectStar(

@@ -11,12 +11,13 @@ declare global {
 const config: GameConfig = {
   type: Phaser.AUTO,
   parent: 'app',
+
   width: 800,
-  height: 600,
+  height: 450,
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 300 },
+      gravity: { y: 400 },
       debug: false,
     },
   },
