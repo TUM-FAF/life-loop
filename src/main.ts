@@ -10,10 +10,13 @@ declare global {
 
 const config: GameConfig = {
   type: Phaser.AUTO,
-  parent: 'app',
-
-  width: 800,
-  height: 450,
+  scale: {
+    mode: Phaser.Scale.FIT,
+    parent: 'app',
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: 800,
+    height: 450,
+  },
   physics: {
     default: 'arcade',
     arcade: {
