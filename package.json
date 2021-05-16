@@ -5,12 +5,12 @@
   "scripts": {
     "start": "phaser-scripts start",
     "build": "phaser-scripts build",
-    "eject": "phaser-scripts eject"
+    "eject": "phaser-scripts eject",
+    "postinstall": "patch-package"
   },
   "dependencies": {
+    "@phaser-cli/scripts": "^2.0.0",
+    "patch-package": "^6.4.7",
     "phaser": "^3.54.0"
-  },
-  "devDependencies": {
-    "@phaser-cli/scripts": "^2.0.0"
   }
 }

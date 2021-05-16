@@ -1,0 +1,13 @@
+diff --git a/node_modules/@phaser-cli/scripts/config/webpack.config.prod.js b/node_modules/@phaser-cli/scripts/config/webpack.config.prod.js
+index c57dc38..804da13 100644
+--- a/node_modules/@phaser-cli/scripts/config/webpack.config.prod.js
++++ b/node_modules/@phaser-cli/scripts/config/webpack.config.prod.js
+@@ -54,7 +54,7 @@ module.exports = {
+   },
+   output: {
+     path: paths.appBuild,
+-    publicPath: '/',
++    publicPath: 'life-loop/',
+     filename: 'js/[name].[chunkhash:8].bundle.js',
+   },
+   module: {
