@@ -122,6 +122,10 @@ export default class PlayScene extends Scene {
     this.handleMobileTouch();
   }
 
+  private nexLevel() {
+    // some condition
+  }
+
   private handleMobileTouch() {
     const { width, height } = this.sys.game.canvas;
 
@@ -163,6 +167,20 @@ export default class PlayScene extends Scene {
       if (touchY < height / 2 && this.player.body.touching.down) {
         this.player.setVelocityY(-330);
       }
+    }
+
+    if (
+      this.player.body.position.x ===
+        this.sys.game.canvas.width - this.player.body.width &&
+      this.player.body.velocity.x > 0
+    ) {
+      this.player.body.position.x = 0;
+      this.nexLevel();
+    }
+
+    if (this.player.body.position.x === 0 && this.player.body.velocity.x < 0) {
+      this.player.body.position.x =
+        this.sys.game.canvas.width - this.player.body.width;
     }
   }
 
