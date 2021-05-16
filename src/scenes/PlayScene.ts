@@ -11,6 +11,7 @@ export default class PlayScene extends Scene {
   stars: Phaser.Physics.Arcade.Group;
   apples: Phaser.Physics.Arcade.Group;
   scoreText: Phaser.GameObjects.Text;
+  finishText: Phaser.GameObjects.Text;
   score = 0;
   pointer1: Phaser.Input.Pointer;
   pointer2: Phaser.Input.Pointer;
@@ -23,6 +24,11 @@ export default class PlayScene extends Scene {
     this.add.image(0, 0, 'sky').setOrigin(0, 0);
     this.scoreText = this.add.text(32, 16, 'while(🍎) {', {
       fontSize: '32px',
+      fill: '#000',
+    });
+
+    this.finishText = this.add.text(640, 170, 'Next Level ->', {
+      fontSize: '20px',
       fill: '#000',
     });
 
@@ -214,7 +220,7 @@ export default class PlayScene extends Scene {
 
     this.score += 1;
     if (this.score >= 11) {
-      this.scoreText.setText('while(-) {');
+      this.scoreText.setText('You broke out of the loop!');
     }
   }
 
@@ -225,7 +231,7 @@ export default class PlayScene extends Scene {
     apple.disableBody(true, true);
     this.score += 1;
     if (this.score >= 11) {
-      this.scoreText.setText('while(-) {');
+      this.scoreText.setText('You broke out of the loop!');
     }
   }
 }
