@@ -9,6 +9,7 @@ export default class PlayScene extends Scene {
   cursors: Phaser.Input.Keyboard.CursorKeys;
   platforms: Phaser.Physics.Arcade.StaticGroup;
   stars: Phaser.Physics.Arcade.Group;
+  apples: Phaser.Physics.Arcade.Group;
   scoreText: Phaser.GameObjects.Text;
   score = 0;
   pointer1: Phaser.Input.Pointer;
@@ -20,7 +21,7 @@ export default class PlayScene extends Scene {
     this.pointer2 = this.input.pointer2;
     this.cursors = this.input.keyboard.createCursorKeys();
     this.add.image(0, 0, 'sky').setOrigin(0, 0);
-    this.scoreText = this.add.text(16, 16, 'score: 0', {
+    this.scoreText = this.add.text(32, 16, 'while(🍎) {', {
       fontSize: '32px',
       fill: '#000',
     });
@@ -64,26 +65,7 @@ export default class PlayScene extends Scene {
       repeat: -1,
     });
 
-    this.stars = this.physics.add.group({
-      key: 'star',
-      repeat: 10,
-      setXY: { x: 50, y: 0, stepX: 70 },
-    });
-
-    this.stars.children.iterate(child => {
-      // @ts-ignore
-      child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-    });
-
-    this.physics.add.collider(this.player, this.platforms);
-    this.physics.add.collider(this.stars, this.platforms);
-    this.physics.add.overlap(
-      this.player,
-      this.stars,
-      this.collectStar,
-      null,
-      this
-    );
+    this.initApples();
   }
 
   public update() {
@@ -123,7 +105,57 @@ export default class PlayScene extends Scene {
   }
 
   private nexLevel() {
-    // some condition
+    if (this.score >= 11) {
+      this.scoreText.setText('while(⭐) {');
+      this.score = 0;
+      this.initStars();
+    }
+  }
+
+  private initApples() {
+    this.apples = this.physics.add.group({
+      key: 'apple',
+      repeat: 10,
+      setXY: { x: 50, y: 0, stepX: 70 },
+    });
+
+    this.apples.children.iterate(child => {
+      // @ts-ignore
+      child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+    });
+
+    this.physics.add.collider(this.player, this.platforms);
+    this.physics.add.collider(this.apples, this.platforms);
+    this.physics.add.overlap(
+      this.player,
+      this.apples,
+      this.eatApple,
+      null,
+      this
+    );
+  }
+
+  private initStars() {
+    this.stars = this.physics.add.group({
+      key: 'star',
+      repeat: 10,
+      setXY: { x: 50, y: 0, stepX: 70 },
+    });
+
+    this.stars.children.iterate(child => {
+      // @ts-ignore
+      child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+    });
+
+    this.physics.add.collider(this.player, this.platforms);
+    this.physics.add.collider(this.stars, this.platforms);
+    this.physics.add.overlap(
+      this.player,
+      this.stars,
+      this.collectStar,
+      null,
+      this
+    );
   }
 
   private handleMobileTouch() {
@@ -190,7 +222,20 @@ export default class PlayScene extends Scene {
   ) {
     star.disableBody(true, true);
 
-    this.score += 10;
-    this.scoreText.setText('Score: ' + this.score);
+    this.score += 1;
+    if (this.score >= 11) {
+      this.scoreText.setText('while(-) {');
+    }
+  }
+
+  private eatApple(
+    player: Phaser.Physics.Arcade.Sprite,
+    apple: Phaser.Physics.Arcade.Sprite
+  ) {
+    apple.disableBody(true, true);
+    this.score += 1;
+    if (this.score >= 11) {
+      this.scoreText.setText('while(-) {');
+    }
   }
 }

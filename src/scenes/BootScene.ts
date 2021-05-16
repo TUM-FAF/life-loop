@@ -6,6 +6,7 @@ import sground from '../assets/splatform.png';
 import star from '../assets/star.png';
 import bomb from '../assets/bomb.png';
 import dude from '../assets/dude.png';
+import apple from '../assets/apple.png';
 
 export default class BootScene extends Scene {
   constructor() {
@@ -19,6 +20,7 @@ export default class BootScene extends Scene {
     this.load.image('wall', wall);
     this.load.image('star', star);
     this.load.image('bomb', bomb);
+    this.load.image('apple', apple);
     this.load.spritesheet('dude', dude, { frameWidth: 32, frameHeight: 48 });
   }
 
