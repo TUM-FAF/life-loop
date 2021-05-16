@@ -11,8 +11,13 @@ export default class PlayScene extends Scene {
   stars: Phaser.Physics.Arcade.Group;
   scoreText: Phaser.GameObjects.Text;
   score = 0;
+  pointer1: Phaser.Input.Pointer;
+  pointer2: Phaser.Input.Pointer;
 
   public create() {
+    this.input.addPointer();
+    this.pointer1 = this.input.pointer1;
+    this.pointer2 = this.input.pointer2;
     this.cursors = this.input.keyboard.createCursorKeys();
     this.add.image(0, 0, 'sky').setOrigin(0, 0);
     this.scoreText = this.add.text(16, 16, 'score: 0', {
@@ -108,10 +113,57 @@ export default class PlayScene extends Scene {
       this.player.body.position.x = 0;
       this.nexLevel();
     }
+
+    if (this.player.body.position.x === 0 && this.player.body.velocity.x < 0) {
+      this.player.body.position.x =
+        this.sys.game.canvas.width - this.player.body.width;
+    }
+
+    this.handleMobileTouch();
   }
 
-  private nexLevel() {
-    // some condition
+  private handleMobileTouch() {
+    const { width, height } = this.sys.game.canvas;
+
+    if (this.pointer1.isDown) {
+      const touchX = this.pointer1.x;
+      const touchY = this.pointer1.y;
+      console.log('1 ' + touchX, touchY);
+      // left
+      if (touchX < width / 2 && touchY > height / 2) {
+        this.player.setVelocityX(-160);
+        this.player.anims.play('left', true);
+      }
+      // right
+      if (touchX > width / 2 && touchY > height / 2) {
+        this.player.setVelocityX(160);
+        this.player.anims.play('right', true);
+      }
+      // jump
+      if (touchY < height / 2 && this.player.body.touching.down) {
+        this.player.setVelocityY(-330);
+      }
+    }
+
+    if (this.pointer2.isDown) {
+      const touchX = this.pointer2.x;
+      const touchY = this.pointer2.y;
+      console.log('2 ' + touchX, touchY);
+      // left
+      if (touchX < width / 2 && touchY > height / 2) {
+        this.player.setVelocityX(-160);
+        this.player.anims.play('left', true);
+      }
+      // right
+      if (touchX > width / 2 && touchY > height / 2) {
+        this.player.setVelocityX(160);
+        this.player.anims.play('right', true);
+      }
+      // jump
+      if (touchY < height / 2 && this.player.body.touching.down) {
+        this.player.setVelocityY(-330);
+      }
+    }
   }
 
   private collectStar(
