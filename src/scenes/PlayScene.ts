@@ -196,14 +196,14 @@ export default class PlayScene extends Scene {
       }
     }
 
-    // if (
-    //   this.player.body.position.x ===
-    //     this.sys.game.canvas.width - this.player.body.width &&
-    //   this.player.body.velocity.x > 0
-    // ) {
-    //   this.player.body.position.x = 0;
-    //   this.nexLevel();
-    // }
+    if (
+      this.player.body.position.x ===
+        this.sys.game.canvas.width - this.player.body.width &&
+      this.player.body.velocity.x > 0
+    ) {
+      this.player.body.position.x = 0;
+      this.nexLevel();
+    }
   }
 
   private collectStar(
